@@ -87,6 +87,11 @@ public class User implements Serializable {
      */
     private String planetCode;
 
+    /**
+     * 用户标签列表 json 格式  ["", "", ""]
+     */
+    private String tags;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

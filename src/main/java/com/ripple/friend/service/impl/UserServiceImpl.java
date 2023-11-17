@@ -2,6 +2,9 @@ package com.ripple.friend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import com.ripple.friend.common.ErrorCode;
 import com.ripple.friend.exception.BusinessException;
 import com.ripple.friend.model.domain.User;
@@ -10,10 +13,14 @@ import com.ripple.friend.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword, String planetCode) {
         // 1. 校验 isAnyBlank方法用于校验字符串是否为 null 、空
-        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword,planetCode)) {
+        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword, planetCode)) {
             // todo 修改为自定义异常
             throw new BusinessException(ErrorCode.NULL_ERROR, "数据为空"); //有一项不满足校验就返回-1
         }
@@ -170,18 +177,84 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setUserStatus(user.getUserStatus());
         safetyUser.setCreateTime(user.getCreateTime()); // 更新时间、是否被删除不用返回了
         safetyUser.setUserRole(user.getUserRole());
+        safetyUser.setTags(user.getTags());
 
         return safetyUser;
     }
 
     /**
      * 用户注销
+     *
      * @param request 请求对象
      */
     @Override
     public void UserLogout(HttpServletRequest request) {
         // 移除 session 中的登录态
         request.getSession().removeAttribute(USER_LOGIN_STATE);
+    }
+
+    @Override
+    public List<User> searchUsersByTags(List<String> tagNameList) {
+
+        // 用于存放脱敏后的用户（返回给前端）
+        List<User> safetyUserList = new ArrayList<>();
+
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            throw new BusinessException(ErrorCode.NULL_ERROR, "");
+        }
+        // 方式1 数据库查询（实现简单）
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        // 拼接 and 查询  like '%java%' and like '%python%
+//        for (String tagName :tagNameList) {
+//            queryWrapper = queryWrapper.like("tags", tagName); // like查询叠加
+//        }
+//        List<User> userList = userMapper.selectList(queryWrapper);
+        // 对数据库中查询到的用户进行脱敏处理
+//        userList.forEach(user -> {
+//            safetyUserList.add(getSafetyUser(user));
+//        });
+
+
+        // 方式2 内存查询（灵活）在内存中判断是否包含要求的标签
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<User> userList = userMapper.selectList(queryWrapper); //先查询所有用户
+        Gson gson = new Gson();
+        // 遍历数据库中查询到的用户
+        for (User user : userList) {
+            // 获取该用户的所有标签
+            String tagsStr = user.getTags(); //标签是个 json字符串 -> ["java", "前端", "python"]
+            // 标签判空（可能当前用户没有标签）
+            if (StringUtils.isBlank(tagsStr)) {
+                continue; // 继续遍历下一个用户，下方代码不再执行
+            }
+            // 把 json 字符串转化成 java 对象，得到的标签放在集合中(标签不能重复) ["java", "前端", "python"] => {"java", "前端", "python"}
+            Set<String> tagSet = gson.fromJson(tagsStr, new TypeToken<Set<String>>() {
+            }.getType());
+            // 对标签集合与传入进来的标签列表进行对比 看是否每个标签都存在于这个标签集合(当前用户拥有的)
+            if (isContainsTagSet(tagSet, tagNameList)) { //如果满足条件
+                safetyUserList.add(getSafetyUser(user)); //匹配到的用户，添加到列表准备返回给前端，注意需要对用户脱敏处理
+            }
+        }
+
+        return safetyUserList;
+    }
+
+    /**
+     * 判断标签列表tagNameList中的每个标签 是否都存在于tagSet标签集合中
+     *
+     * @param tagSet      用户的所有标签
+     * @param tagNameList 传入的标签列表(查询参数)
+     * @return false-不满足，true-满足
+     */
+    public boolean isContainsTagSet(Set<String> tagSet, List<String> tagNameList) {
+        // 对标签集合与传入进来的标签列表进行对比
+        for (String tagName : tagNameList) {
+            // 如果该传入的标签列表中的标签并不存在于这个标签集合(当前用户拥有的)
+            if (!tagSet.contains(tagName)) {
+                return false;
+            }
+        }
+        return true; //代表(查询参数)在标签集合中都存在
     }
 
 

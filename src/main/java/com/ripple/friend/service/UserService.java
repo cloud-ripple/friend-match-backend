@@ -4,6 +4,7 @@ import com.ripple.friend.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author 花海
@@ -48,4 +49,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     void UserLogout(HttpServletRequest request);
+
+    /**
+     * 根据多个标签查询用户
+     * @param tagNameList 标签列表(前端传入的标签参数)
+     * @return 匹配的用户
+     */
+    List<User> searchUsersByTags(List<String> tagNameList);
 }

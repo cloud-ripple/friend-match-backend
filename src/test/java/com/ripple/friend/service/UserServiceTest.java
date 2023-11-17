@@ -1,11 +1,15 @@
 package com.ripple.friend.service;
 
 import com.ripple.friend.model.domain.User;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author boboking
@@ -13,6 +17,7 @@ import javax.annotation.Resource;
  * @description 用户服务测试
  */
 @SpringBootTest
+@Slf4j
 public class UserServiceTest {
 
     @Resource
@@ -72,6 +77,14 @@ public class UserServiceTest {
         checkPassword = "123456789";
         result = userService.userRegister(userAccount, userPassword, checkPassword, planetCode);
         Assertions.assertEquals(-1, result);
+    }
 
+    // 测试根据标签查询用户
+    @Test
+    void searchUsersByTags() {
+        List<String> tagNameList = Arrays.asList("java", "python","c++");
+        List<User> userList = userService.searchUsersByTags(tagNameList);
+        Assertions.assertNotNull(userList); //只要不为空就可以
+        log.info("根据标签列表参数查询到的用户：{}",userList);
     }
 }
