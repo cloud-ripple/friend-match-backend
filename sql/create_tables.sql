@@ -41,3 +41,29 @@ create unique index tag_index_tagName
 create index tag_index_userId
     on tag (userId)
     comment '用户id索引';
+
+insert into user
+values (null, '韩立', 'hanli',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/076bd9ed-6d76-4a27-ad8d-72bbd837eb13.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 4, '["网上冲浪","萌新"]', '上海市', '修仙', 0),
+       (null, '历飞雨', 'lifeiyu',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/09876f4f-f931-4f44-a189-e8fc5a68e28b.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 5, '["大二","跑步","前端"]', '深圳市', '暂时没有个性签名', 0),
+       (null, '钟吾', 'zhongwu',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/0b52f8e9-5d81-4a62-b4bf-b248aff63d3d.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 6, '["小白"]', '上海市', '暂时没有个性签名', 0),
+       (null, '李化元', 'lihuayuan',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/0edc4e29-bdad-4234-9426-11d87622fcf8.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 7, '["网上冲浪","羽毛球"]', '苏州市', '暂时没有个性签名', 0),
+       (null, '王禅', 'hanli',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/076bd9ed-6d76-4a27-ad8d-72bbd837eb13.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 8, '["网上冲浪","python"]', '南京市', '暂时没有个性签名', 0),
+       (null, '云露', 'hanli',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/22a55abb-f1c0-4651-ac71-d6d78589bdaa.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 9, '["网上冲浪","凡人修仙传"]', '广州', '暂时没有个性签名',
+        0),
+       (null, '陈巧倩', 'hanli',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/34840766-5364-4496-9d02-5a93bc3dedc5.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 10, '["网上冲浪","武动乾坤","小白"]', '北京市',
+        '暂时没有个性签名', 0);
+

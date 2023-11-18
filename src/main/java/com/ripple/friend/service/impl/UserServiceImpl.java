@@ -3,7 +3,6 @@ package com.ripple.friend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.ripple.friend.common.ErrorCode;
 import com.ripple.friend.exception.BusinessException;
@@ -18,9 +17,7 @@ import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -193,32 +190,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         request.getSession().removeAttribute(USER_LOGIN_STATE);
     }
 
+    /**
+     * 根据多个标签查询用户- 方式1 数据库查询（实现简单）
+     */
     @Override
     public List<User> searchUsersByTags(List<String> tagNameList) {
-
-        // 用于存放脱敏后的用户（返回给前端）
-        List<User> safetyUserList = new ArrayList<>();
-
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.NULL_ERROR, "");
         }
-        // 方式1 数据库查询（实现简单）
-//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//        // 拼接 and 查询  like '%java%' and like '%python%
-//        for (String tagName :tagNameList) {
-//            queryWrapper = queryWrapper.like("tags", tagName); // like查询叠加
-//        }
-//        List<User> userList = userMapper.selectList(queryWrapper);
-        // 对数据库中查询到的用户进行脱敏处理
-//        userList.forEach(user -> {
-//            safetyUserList.add(getSafetyUser(user));
-//        });
+        // 用于存放脱敏后的用户（返回给前端）
+        List<User> safetyUserList = new ArrayList<>();
 
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        // 拼接 and 查询  like '%java%' and like '%python%
+        for (String tagName : tagNameList) {
+            queryWrapper = queryWrapper.like("tags", tagName); // like查询叠加
+        }
+        List<User> userList = userMapper.selectList(queryWrapper);
+        //对数据库中查询到的用户进行脱敏处理
+        userList.forEach(user -> {
+            safetyUserList.add(getSafetyUser(user));
+        });
 
-        // 方式2 内存查询（灵活）在内存中判断是否包含要求的标签
+        return safetyUserList;
+    }
+
+    /**
+     * 根据多个标签查询用户 -方式2 内存计算查询（灵活）在内存中判断是否包含要求的标签
+     */
+    @Override
+    public List<User> searchUsersByTagsComputed(List<String> tagNameList) {
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            throw new BusinessException(ErrorCode.NULL_ERROR, "根据标签查询用户-tagNameList为空");
+        }
+        // 用于存放脱敏后的用户（返回给前端）
+        List<User> safetyUserList = new ArrayList<>();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         List<User> userList = userMapper.selectList(queryWrapper); //先查询所有用户
         Gson gson = new Gson();
+
         // 遍历数据库中查询到的用户
         for (User user : userList) {
             // 获取该用户的所有标签
@@ -227,9 +237,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             if (StringUtils.isBlank(tagsStr)) {
                 continue; // 继续遍历下一个用户，下方代码不再执行
             }
-            // 把 json 字符串转化成 java 对象，得到的标签放在集合中(标签不能重复) ["java", "前端", "python"] => {"java", "前端", "python"}
+            // 把 json 字符串转化成 java 对象（反序列化），得到的标签放在集合中(标签不能重复) ["java", "前端", "python"] => {"java", "前端", "python"}
             Set<String> tagSet = gson.fromJson(tagsStr, new TypeToken<Set<String>>() {
             }.getType());
+            // 对集合tagSet进行判空处理（也可以用if判断）
+            // ofNullable方法接收一个可能为空的对象，如果它为空就取后面指定的默认值(创建一个)
+            tagSet= Optional.ofNullable(tagSet).orElse(new HashSet<>());
             // 对标签集合与传入进来的标签列表进行对比 看是否每个标签都存在于这个标签集合(当前用户拥有的)
             if (isContainsTagSet(tagSet, tagNameList)) { //如果满足条件
                 safetyUserList.add(getSafetyUser(user)); //匹配到的用户，添加到列表准备返回给前端，注意需要对用户脱敏处理

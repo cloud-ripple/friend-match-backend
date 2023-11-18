@@ -13,7 +13,7 @@ public class ResultUtils {
      * @param <T>
      */
     public static <T> BaseResponse<T> success(T data) {
-        return new BaseResponse<T>(0, data, "请求成功");
+        return new BaseResponse<T>(200, data, "请求成功");
     }
 
     /**

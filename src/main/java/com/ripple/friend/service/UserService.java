@@ -51,9 +51,16 @@ public interface UserService extends IService<User> {
     void UserLogout(HttpServletRequest request);
 
     /**
-     * 根据多个标签查询用户
+     * 根据多个标签查询用户- 方式1 数据库查询（实现简单）
      * @param tagNameList 标签列表(前端传入的标签参数)
      * @return 匹配的用户
      */
     List<User> searchUsersByTags(List<String> tagNameList);
+
+    /**
+     * 根据多个标签查询用户-方式2 内存计算查询（灵活）在内存中判断是否包含要求的标签
+     * @param tagNameList 标签列表(前端传入的标签参数)
+     * @return 匹配的用户
+     */
+    List<User> searchUsersByTagsComputed(List<String> tagNameList);
 }

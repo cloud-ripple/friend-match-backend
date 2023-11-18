@@ -11,6 +11,7 @@ import com.ripple.friend.model.domain.request.UserRegisterRequest;
 import com.ripple.friend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -149,4 +150,16 @@ public class UserController {
         }
         return true;
     }
+
+    // 根据多个标签搜索用户
+    @GetMapping("/tags")
+    public BaseResponse searchUsersByTags(@RequestParam("tagNameList") @RequestBody List<String> tagNameList) {
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            throw new BusinessException(ErrorCode.NULL_ERROR, "标签查询参数为空");
+        }
+        log.info("根据多个标签搜索用户：{}", tagNameList);
+        List<User> userList = userService.searchUsersByTagsComputed(tagNameList);
+        return ResultUtils.success(userList);
+    }
+
 }
