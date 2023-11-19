@@ -28,6 +28,7 @@ import static com.ripple.friend.constant.UserConstant.USER_LOGIN_STATE;
  * @description 用户接口
  */
 
+@CrossOrigin(origins = {"http://127.0.0.1:5173/"})
 @RestController
 @RequestMapping("/user")
 @Slf4j
@@ -151,9 +152,9 @@ public class UserController {
         return true;
     }
 
-    // 根据多个标签搜索用户
+    // 根据多个标签搜索用户 - 内存计算方式
     @GetMapping("/tags")
-    public BaseResponse searchUsersByTags(@RequestParam("tagNameList") @RequestBody List<String> tagNameList) {
+    public BaseResponse<List<User>> searchUsersByTags(@RequestParam(name = "tagNameList")@RequestBody List<String> tagNameList) {
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.NULL_ERROR, "标签查询参数为空");
         }
@@ -161,5 +162,6 @@ public class UserController {
         List<User> userList = userService.searchUsersByTagsComputed(tagNameList);
         return ResultUtils.success(userList);
     }
+
 
 }
