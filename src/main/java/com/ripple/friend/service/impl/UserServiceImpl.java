@@ -175,6 +175,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setCreateTime(user.getCreateTime()); // 更新时间、是否被删除不用返回了
         safetyUser.setUserRole(user.getUserRole());
         safetyUser.setTags(user.getTags());
+        safetyUser.setArea(user.getArea());
+        safetyUser.setSelfDesc(user.getSelfDesc());
+        safetyUser.setFansNum(user.getFansNum());
 
         return safetyUser;
     }
@@ -242,7 +245,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }.getType());
             // 对集合tagSet进行判空处理（也可以用if判断）
             // ofNullable方法接收一个可能为空的对象，如果它为空就取后面指定的默认值(创建一个)
-            tagSet= Optional.ofNullable(tagSet).orElse(new HashSet<>());
+            tagSet = Optional.ofNullable(tagSet).orElse(new HashSet<>());
             // 对标签集合与传入进来的标签列表进行对比 看是否每个标签都存在于这个标签集合(当前用户拥有的)
             if (isContainsTagSet(tagSet, tagNameList)) { //如果满足条件
                 safetyUserList.add(getSafetyUser(user)); //匹配到的用户，添加到列表准备返回给前端，注意需要对用户脱敏处理

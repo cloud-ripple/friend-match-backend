@@ -92,6 +92,21 @@ public class User implements Serializable {
      */
     private String tags;
 
+    /**
+     * 用户所在地区-城市
+     */
+    private String area;
+
+    /**
+     * 用户自我描述信息
+     */
+    private String selfDesc;
+
+    /**
+     * 粉丝数量
+     */
+    private Long fansNum;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
