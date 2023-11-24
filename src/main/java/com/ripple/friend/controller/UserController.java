@@ -154,7 +154,7 @@ public class UserController {
 
     // 根据多个标签搜索用户 - 内存计算方式
     @GetMapping("/tags")
-    public BaseResponse<List<User>> searchUsersByTags(@RequestParam(name = "tagNameList")@RequestBody List<String> tagNameList) {
+    public BaseResponse<List<User>> searchUsersByTags(@RequestParam(name = "tagNameList") @RequestBody List<String> tagNameList) {
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.NULL_ERROR, "标签查询参数为空");
         }
@@ -163,5 +163,15 @@ public class UserController {
         return ResultUtils.success(userList);
     }
 
+    // 根据属性名(字段)更新用户信息
+    @PostMapping("/update")
+    public BaseResponse updateUserById(@RequestBody User user) {
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR, "更新的用户参数为空");
+        }
+        log.info("更新用户：{}",user);
+        boolean update = userService.updateById(user);
+        return update == true ? ResultUtils.success(null) : ResultUtils.error(ErrorCode.SYSTEM_ERROR, "用户信息更新失败");
+    }
 
 }

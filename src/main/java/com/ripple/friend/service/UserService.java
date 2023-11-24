@@ -63,4 +63,11 @@ public interface UserService extends IService<User> {
      * @return 匹配的用户
      */
     List<User> searchUsersByTagsComputed(List<String> tagNameList);
+
+    /**
+     * 根据属性名(字段)更新用户信息
+     * @param user 用户
+     * @return
+     */
+    int updateUserByName(User user);
 }

@@ -37,7 +37,7 @@ public class User implements Serializable {
     private String avatarUrl;
 
     /**
-     * 性别
+     * 性别 （1-男，0-女）
      */
     private Integer gender;
 
@@ -88,7 +88,7 @@ public class User implements Serializable {
     private String planetCode;
 
     /**
-     * 用户标签列表 json 格式  ["", "", ""]
+     * 用户标签列表 json格式字符串 比如： ["java", "python", "小白"]
      */
     private String tags;
 

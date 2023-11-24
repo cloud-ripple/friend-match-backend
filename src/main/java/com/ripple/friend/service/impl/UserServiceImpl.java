@@ -255,6 +255,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return safetyUserList;
     }
 
+    // 根据属性名(字段)更新用户信息
+    @Override
+    public int updateUserByName(User user) {
+        int rows = userMapper.updateById(user);
+        return rows;
+    }
+
     /**
      * 判断标签列表tagNameList中的每个标签 是否都存在于tagSet标签集合中
      *

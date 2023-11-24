@@ -35,6 +35,11 @@ public class Tag implements Serializable {
     private Long parentId;
 
     /**
+     * 标签分类
+     */
+    private String category;
+
+    /**
      * 0-不是父标签，1-父标签
      */
     private Integer isParent;
