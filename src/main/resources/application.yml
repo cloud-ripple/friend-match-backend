@@ -35,3 +35,21 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 
+knife4j:
+  enable: true
+  openapi:
+    title: 伙伴匹配系统
+    description: 接口文档
+    email: 1493440094@qq.com
+    concat: 云漪
+    url: https://github.com/cloud-ripple
+    version: v4.0
+    license: Apache 2.0
+    license-url: https://github.com/cloud-ripple
+    terms-of-service-url: https://github.com/cloud-ripple
+    group:
+      test1:
+        group-name: 分组名称
+        api-rule: package
+        api-rule-resources:
+          - com.ripple.friend.controller

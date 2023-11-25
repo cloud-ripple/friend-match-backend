@@ -1,5 +1,7 @@
 package com.ripple.friend.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.ripple.friend.common.BaseResponse;
 import com.ripple.friend.common.ErrorCode;
 import com.ripple.friend.common.ResultUtils;
@@ -7,6 +9,9 @@ import com.ripple.friend.exception.BusinessException;
 import com.ripple.friend.model.domain.Tag;
 import com.ripple.friend.service.TagService;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,8 @@ import java.util.List;
  * @description
  */
 
+@ApiSupport(author = "云漪")
+@ApiResponse(description = "tag标签模块")
 @CrossOrigin(origins = {"http://127.0.0.1:5173/"})
 @RestController
 @RequestMapping
@@ -31,6 +38,7 @@ public class TagController {
     private TagService tagService;
 
     // 获取所有父标签-即所有分类
+    @ApiResponse(description = "获取所有父标签-即所有分类")
     @GetMapping("/parentTags")
     public BaseResponse<List<Tag>> selectParentTags() {
         log.info("查询所有父标签分类..");
@@ -38,6 +46,7 @@ public class TagController {
     }
 
     // 根据分类名称来查询该类别下的所有子标签
+    @ApiResponse(description = "根据分类名称来查询该类别下的所有子标签")
     @GetMapping("/categoryTags")
     public BaseResponse<List<Tag>> selectTagsByCategory(String category) {
         if (StringUtils.isBlank(category)) {
@@ -49,6 +58,7 @@ public class TagController {
     }
 
     // 查询所有子标签，isParent字段  0-不是父标签，1-父标签
+    @ApiResponse(description = "查询所有子标签，isParent字段  0-不是父标签，1-父标签")
     @GetMapping("/childTags")
     public BaseResponse<List<Tag>> selectChildTags() {
         log.info("查询所有子标签..");
