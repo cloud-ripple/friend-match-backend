@@ -28,7 +28,6 @@ import static com.ripple.friend.constant.UserConstant.USER_LOGIN_STATE;
  * @description 用户接口
  */
 
-@CrossOrigin(origins = {"http://127.0.0.1:5173/"})
 @RestController
 @RequestMapping("/user")
 @Slf4j
