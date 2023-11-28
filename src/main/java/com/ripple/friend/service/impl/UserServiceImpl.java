@@ -119,7 +119,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (userPassword.length() < 8) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户密码过短");
         }
-
         //账户不能包含特殊字符
         // String regEx ="[^a-zA-Z0-9]";    // 只允许字母和数字
         String validPattern = "[` ~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
@@ -127,7 +126,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (matcher.find()) { // 如果含有特殊字符
             throw new BusinessException(ErrorCode.PARAMS_ERROR, " 账号不能有特殊字符");
         }
-
         // 2. 加密密码
         // 使用Spring提供的加密工具类，得到加密密码
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
@@ -142,10 +140,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             log.info("user login failed, userAccount cannot match userPassword"); //match(匹配)
             throw new BusinessException(ErrorCode.PARAMS_ERROR, " 账号或密码错误");
         }
-
         // 4. 把该用户信息脱敏
         User safetyUser = getSafetyUser(user);
-
         // 5. 记录用户的登录状态,将其存放到服务器上(session)，当前只是单个，后面可以做成分布式
         request.getSession().setAttribute(USER_LOGIN_STATE, safetyUser);
 

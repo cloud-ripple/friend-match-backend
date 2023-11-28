@@ -3,6 +3,7 @@ package com.ripple.friend.once.importuser;
 
 import com.ripple.friend.mapper.UserMapper;
 import com.ripple.friend.model.domain.User;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -23,6 +24,7 @@ public class InsertUsers {
     /**
      * 批量插入用户
      */
+    // 每隔 5 秒 执行一次方法 （需要在启动类上标识 @EnableScheduling  // 开启spring 定时任务的支持）
 //    @Scheduled(initialDelay = 5000, fixedRate = Long.MAX_VALUE)
     public void doInsertUsers() {
         StopWatch stopWatch = new StopWatch();
@@ -42,6 +44,8 @@ public class InsertUsers {
             user.setUserStatus(0);
             user.setUserRole(0);
             user.setPlanetCode("11111111");
+            user.setSelfDesc("暂无个性签名");
+            user.setArea("");
             userMapper.insert(user);
         }
         stopWatch.stop();

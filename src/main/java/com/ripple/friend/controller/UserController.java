@@ -1,6 +1,7 @@
 package com.ripple.friend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ripple.friend.common.BaseResponse;
 import com.ripple.friend.common.ErrorCode;
 import com.ripple.friend.common.ResultUtils;
@@ -152,7 +153,7 @@ public class UserController {
     }
 
     // 根据多个标签搜索用户 - 内存计算方式
-    @GetMapping("/tags")
+    @GetMapping("/search/tags")
     public BaseResponse<List<User>> searchUsersByTags(@RequestParam(name = "tagNameList") @RequestBody List<String> tagNameList) {
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.NULL_ERROR, "标签查询参数为空");
@@ -168,9 +169,19 @@ public class UserController {
         if (user == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR, "更新的用户参数为空");
         }
-        log.info("更新用户：{}",user);
+        log.info("更新用户：{}", user);
         boolean update = userService.updateById(user);
         return update == true ? ResultUtils.success(null) : ResultUtils.error(ErrorCode.SYSTEM_ERROR, "用户信息更新失败");
+    }
+
+    // 主页推荐用户 - 相似度匹配
+    @GetMapping("/recommend")
+    public BaseResponse<Page<User>> recommendUsers(long pageSize, long pageNum) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        // 分页查询
+        Page<User> userList = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+
+        return ResultUtils.success(userList);
     }
 
 }
