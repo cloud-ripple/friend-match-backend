@@ -258,6 +258,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return rows;
     }
 
+    @Override
+    public User getLoginUser(HttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+        // 从 session 中拿到用户的登录状态信息
+        User userObj = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
+        if (userObj == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN, "用户没有登录");
+        }
+        long userId = userObj.getId();
+        // todo 校验用户是否合法
+        // 从数据库中去查询当前登录用户
+        User user = userMapper.selectById(userId);
+        return getSafetyUser(user); // 返回脱敏后的用户
+    }
+
     /**
      * 判断标签列表tagNameList中的每个标签 是否都存在于tagSet标签集合中
      *

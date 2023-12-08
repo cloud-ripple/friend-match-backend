@@ -67,6 +67,33 @@ values (null, '韩立', 'hanli',
         0, '11111111', null, null, 0, now(), now(), 0, 1, 10, '["网上冲浪","武动乾坤","小白"]', '北京市',
         '暂时没有个性签名', 0);
 
+insert into user
+values (null, '假用户', 'test1',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 17, '["网上冲浪","萌新"]', '上海市', '哈哈哈', 0),
+       (null, '假用户', 'test2',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 18, '["大二","跑步","前端"]', '深圳市', '暂时没有个性签名',
+        0),
+       (null, '假用户', 'test3',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 19, '["小白","男"]', '上海市', '暂时没有个性签名', 0),
+       (null, '假用户', 'test4',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 20, '["男","网上冲浪","羽毛球"]', '苏州市',
+        '暂时没有个性签名', 0),
+       (null, '假用户', 'test5',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        1, '11111111', null, null, 0, now(), now(), 0, 1, 21, '["男","网上冲浪","python"]', '南京市',
+        '暂时没有个性签名', 0),
+       (null, '假用户', 'test6',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 22, '["网上冲浪","男"]', '广州', '好好好',
+        0),
+       (null, '假用户', 'test7',
+        'https://bobo-tlias.oss-cn-hangzhou.aliyuncs.com/19.jpeg',
+        0, '11111111', null, null, 0, now(), now(), 0, 1, 23, '["网上冲浪","女","小白"]', '北京市',
+        '暂时没有个性签名', 0);
 
 -- 父标签分类
 insert into tag (id, tagName, userId, parentId, category, isParent, createTime, updateTime, isDelete)
@@ -148,7 +175,6 @@ values (null, '在校生', 10, 4, '身份', 0, now(), now(), 0),
        (null, '舞蹈生', 2, 4, '身份', 0, now(), now(), 0),
        (null, '厨师', 8, 4, '身份', 0, now(), now(), 0),
        (null, '导游', 8, 4, '身份', 0, now(), now(), 0);
-
 
 
 -- 子标签-特殊经历类

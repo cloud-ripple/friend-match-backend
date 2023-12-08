@@ -12,6 +12,7 @@ import com.ripple.friend.model.domain.request.UserRegisterRequest;
 import com.ripple.friend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.ripple.friend.constant.UserConstant.ADMIN_ROLE;
 import static com.ripple.friend.constant.UserConstant.USER_LOGIN_STATE;
@@ -36,6 +38,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
@@ -87,16 +92,8 @@ public class UserController {
     // 获取当前登录用户
     @GetMapping("/current")
     public User getCurrentUser(HttpServletRequest request) {
-        // 从 session 中拿到用户的登录状态信息
-        User userObj = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
-        if (userObj == null) {
-            throw new BusinessException(ErrorCode.NOT_LOGIN, "用户没有登录");
-        }
-        long userId = userObj.getId();
-        // todo 校验用户是否合法
-        // 从数据库中去查询当前登录用户
-        User user = userService.getById(userId);
-        return userService.getSafetyUser(user); // 返回脱敏后的用户
+        User user = userService.getLoginUser(request);
+        return user;
     }
 
     // 根据用户名模糊查询
@@ -176,12 +173,31 @@ public class UserController {
 
     // 主页推荐用户 - 相似度匹配
     @GetMapping("/recommend")
-    public BaseResponse<Page<User>> recommendUsers(long pageSize, long pageNum) {
+    public BaseResponse<Page<User>> recommendUsers(long pageSize, long pageNum, HttpServletRequest request) {
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        //设计缓存 key，让不同的用户看到的数据不同
+        String redisKey = String.format("friend:user:recommend:%s", loginUser.getId());
+        // 先判断如有缓存，直接读缓存用户数据，就不用从数据库中查询了
+        Page<User> userPage = (Page<User>) redisTemplate.opsForValue().get(redisKey);
+        if (userPage != null) {
+            return ResultUtils.success(userPage);
+        }
+        // 数据库中查询用户，分页查询
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        // 分页查询
-        Page<User> userList = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        // 把查询到的用户写入缓存，注意key过期时间 40s后数据就不存在了
+        /*
+            redis 内存不能无限缓存数据，底层有一个内存溢出淘汰策略，会删除掉一些重要数据，有不确定性。
+            所以在写入缓存数据的时候必须设置过期时间
+         */
+        try {
+            redisTemplate.opsForValue().set(redisKey, userPage, 40000, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            log.error("分页查询用户写入缓存出错了 redis set key error", e);
+        }
 
-        return ResultUtils.success(userList);
+        return ResultUtils.success(userPage);
     }
 
 }
