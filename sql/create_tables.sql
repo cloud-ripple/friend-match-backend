@@ -5,7 +5,7 @@ create table if not exists user
     username     varchar(256) default ''                null comment '用户昵称',
     userAccount  varchar(256)                           null comment '账号',
     avatarUrl    varchar(1024)                          null comment '用户头像',
-    gender       tinyint                                null comment '性别',
+    gender       tinyint                                null comment '性别 (1-男，0-女)',
     userPassword varchar(512)                           not null comment '密码',
     phone        varchar(128)                           null comment '电话',
     email        varchar(512)                           null comment '邮箱',
@@ -15,7 +15,10 @@ create table if not exists user
     isDelete     tinyint      default 0                 not null comment '是否删除',
     userRole     int          default 0                 not null comment '用户角色 0-普通用户 1-管理员',
     planetCode   varchar(512)                           null comment '星球编号',
-    tags         varchar(1024)                          null comment '标签列表'
+    tags         varchar(1024)                          null comment '标签 json 列表',
+    area         varchar(512)                           null comment '用户所在地区-城市',
+    selfDesc     varchar(255) default ''                null comment '用户自我描述信息',
+    fansNum      bigint       default 0                 null comment '粉丝数量'
 )
     comment '用户' charset = utf8;
 
@@ -247,10 +250,39 @@ values (null, '脱口秀', 9, 11, '线下活动', 0, now(), now(), 0),
        (null, '剧本杀', 4, 11, '线下活动', 0, now(), now(), 0),
        (null, '野外露营', 4, 11, '线下活动', 0, now(), now(), 0);
 
+-- 队伍表
+create table if not exists team
+(
+    id          bigint auto_increment comment '主键ID'
+        primary key,
+    teamName    varchar(256)                       not null comment '队伍名',
+    description varchar(256)                       null comment '描述',
+    maxNum      int      default 1                 not null comment '最大人数',
+    expireTime  datetime                           null comment '过期时间',
+    userId      bigint                             not null comment '创建人id',
+    status      int      default 0                 not null comment '0-公开、1-私有、2-加密',
+    password    varchar(512)                       null comment '入队密码',
+    createTime  datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    updateTime  datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    isDelete    tinyint  default 0                 not null comment '是否删除'
+
+)
+    comment '队伍' charset = utf8;
 
 
-
-
+-- 用户-队伍表（用户与队伍的关系）
+create table if not exists user_team
+(
+    id         bigint auto_increment comment '主键ID'
+        primary key,
+    userId     bigint                             not null comment '创建人id',
+    teamId     bigint                             not null comment '队伍id',
+    joinTime   datetime                           null comment '加入时间',
+    createTime datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    updateTime datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    isDelete   tinyint  default 0                 not null comment '是否删除'
+)
+    comment '用户-队伍关系' charset = utf8;
 
 
 

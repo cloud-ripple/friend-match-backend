@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6af86b1b-41d8-4638-a356-3e274e66d90a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/config/RedissonConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/ripple/friend/service/RedissonTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/job/PreCacheJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/job/PreCacheJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/create_tables.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +90,7 @@
       <recent name="com.ripple.friend.service.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RedissonTest.test">
+  <component name="RunManager" selected="Spring Boot.FriendMatchApplication">
     <configuration name="RedisTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="friend-match-backend" />
       <extension name="coverage">
@@ -235,7 +222,7 @@
       <workItem from="1701930343397" duration="2414000" />
       <workItem from="1701944822740" duration="4743000" />
       <workItem from="1702019148977" duration="10755000" />
-      <workItem from="1702349851862" duration="7735000" />
+      <workItem from="1702349851862" duration="10313000" />
     </task>
     <servers />
   </component>
