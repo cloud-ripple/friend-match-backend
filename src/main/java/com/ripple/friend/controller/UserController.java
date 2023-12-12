@@ -178,15 +178,16 @@ public class UserController {
         User loginUser = userService.getLoginUser(request);
         //设计缓存 key，让不同的用户看到的数据不同
         String redisKey = String.format("friend:user:recommend:%s", loginUser.getId());
-        // 先判断如有缓存，直接读缓存用户数据，就不用从数据库中查询了
+        // 先判断如有缓存，直接读缓存用户数据，就不用从数据库中查询了，还需要判断缓存中的用户分页当前页码是否和下一次请求的页码相同，因为主页用了分页组件
+        // 否则只会返回显示第一次缓存的分页用户(第1页)
         Page<User> userPage = (Page<User>) redisTemplate.opsForValue().get(redisKey);
-        if (userPage != null) {
+        if (userPage != null && userPage.getCurrent() == pageNum) {
             return ResultUtils.success(userPage);
         }
         // 数据库中查询用户，分页查询
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
-        // 把查询到的用户写入缓存，注意key过期时间 40s后数据就不存在了
+        // 把查询到的用户写入缓存，注意key过期时间 40s后数据就不存在了，如果不设置缓存过期时间，会导致缓存只进不出，无限增加
         /*
             redis 内存不能无限缓存数据，底层有一个内存溢出淘汰策略，会删除掉一些重要数据，有不确定性。
             所以在写入缓存数据的时候必须设置过期时间
