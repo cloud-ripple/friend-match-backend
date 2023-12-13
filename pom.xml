@@ -112,7 +112,12 @@
             <artifactId>redisson</artifactId>
             <version>3.17.5</version>
         </dependency>
-
+        <!-- 些常用工具类-->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
