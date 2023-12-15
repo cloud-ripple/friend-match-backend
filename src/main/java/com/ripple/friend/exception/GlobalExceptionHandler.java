@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
 
     @ResponseBody // 使用 @RestControllerAdvice 的话可以省略该注解
     @ExceptionHandler({BusinessException.class})
-    public BaseResponse businessExceptionHandler(HttpServletRequest request, BusinessException businessEx) {
-        log.error("自定义业务异常：状态码={}, 信息={}, 描述={}", businessEx.getCode(), businessEx.getMessage(), businessEx.getDescription());
-        return ResultUtils.error(ErrorCode.PARAMS_ERROR, businessEx.getDescription());
+    public BaseResponse businessExceptionHandler(BusinessException businessEx) {
+        log.error("自定义业务异常：状态码-{}, {}, 描述-{}", businessEx.getCode(), businessEx.getMessage(), businessEx.getDescription());
+        return ResultUtils.error(ErrorCode.getErrorEnumByCode(businessEx.getCode()), businessEx.getDescription());
     }
 
     @ResponseBody

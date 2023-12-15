@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: twb
-    url: jdbc:mysql://localhost/friend_match
+    url: jdbc:mysql://localhost/friend_match?serverTimezone=Asia/Shanghai
   # redis 配置
   redis:
     port: 6379

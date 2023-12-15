@@ -284,8 +284,16 @@ create table if not exists user_team
 )
     comment '用户-队伍关系' charset = utf8;
 
+-- 查询队伍和已加入队伍成员的信息
+select *
+from team t
+         left join user_team ut on t.id = ut.teamId
+         left join user u on ut.userId = u.id;
 
-
+-- 查询队伍和创建人的信息
+select *
+from team t
+         left join user u on t.userId = u.id;
 
 
 

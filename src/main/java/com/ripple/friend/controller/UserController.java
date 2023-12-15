@@ -101,7 +101,7 @@ public class UserController {
     public List<User> searchUsers(String username, HttpServletRequest request) {
         log.info("查询用户参数 username：{}", username);
         // 仅管理员可查询
-        if (!isAdmin(request)) {
+        if (!userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH, "仅管理员可查询"); //如果不是管理员返回空列表
         }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -125,28 +125,13 @@ public class UserController {
     public boolean deleteUser(long id, HttpServletRequest request) {
         log.info("删除用户参数 id：{}", id);
         // 仅管理员可删除
-        if (!isAdmin(request)) {
+        if (!userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH, "仅管理员可删除");
         }
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "该删除的用户id不合法");
         }
         return userService.removeById(id);
-    }
-
-    /**
-     * 是否为管理员
-     *
-     * @param request 请求对象
-     * @return
-     */
-    private boolean isAdmin(HttpServletRequest request) {
-        // 仅管理员可查询
-        User userObj = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
-        if (userObj == null || userObj.getUserRole() != ADMIN_ROLE) {
-            throw new BusinessException(ErrorCode.NO_AUTH, "用户未登录或非管理员");
-        }
-        return true;
     }
 
     // 根据多个标签搜索用户 - 内存计算方式

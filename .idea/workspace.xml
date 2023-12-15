@@ -5,16 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6af86b1b-41d8-4638-a356-3e274e66d90a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/common/PageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/TeamController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/dto/TeamQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/81fa913a-80fa-4923-94ac-4a256a808f48.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/enums/TeamStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/request/TeamAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/request/TeamUpdateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/vo/TeamUserVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/vo/UserVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/create_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/common/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/common/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/common/ResultUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/common/ResultUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/TeamController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/domain/request/UserLoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/request/UserLoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/domain/request/UserRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/request/UserRegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/exception/BusinessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/domain/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/domain/Team.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/dto/TeamQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/model/dto/TeamQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/TeamService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/impl/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/impl/TeamServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ripple/friend/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +38,7 @@
       <list>
         <option value="JUnit4 Test Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -52,36 +65,37 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/云漪星球项目/伙伴匹配系统/friend-match-backend/src/main/java/com/ripple/friend/config&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;0.30120483&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;e875cba0730b6e5febe740d396e4ff20&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "D:/云漪星球项目/伙伴匹配系统/friend-match-backend/src/main/java/com/ripple/friend/config",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "settings.editor.splitter.proportion": "0.30120483",
+    "spring.configuration.checksum": "e875cba0730b6e5febe740d396e4ff20"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
-      &quot;MySQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "MySQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -102,6 +116,7 @@
       <recent name="com.ripple.friend.service.impl" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ripple.friend.model.vo" />
       <recent name="com.ripple.friend.controller" />
     </key>
   </component>
@@ -253,6 +268,8 @@
       <workItem from="1702349851862" duration="14394000" />
       <workItem from="1702388805027" duration="132000" />
       <workItem from="1702388944385" duration="1513000" />
+      <workItem from="1702441342319" duration="11473000" />
+      <workItem from="1702642248466" duration="11092000" />
     </task>
     <servers />
   </component>
@@ -269,6 +286,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ripple/friend/service/impl/TeamServiceImpl.java</url>
+          <line>236</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

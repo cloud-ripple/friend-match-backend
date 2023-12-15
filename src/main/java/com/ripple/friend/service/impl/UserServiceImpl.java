@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.ripple.friend.constant.UserConstant.ADMIN_ROLE;
 import static com.ripple.friend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -272,7 +273,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // todo 校验用户是否合法
         // 从数据库中去查询当前登录用户
         User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
         return getSafetyUser(user); // 返回脱敏后的用户
+    }
+
+    @Override
+    public boolean isAdmin(HttpServletRequest request) {
+        // 先获取当前登录用户
+        User userObj = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
+        // 仅管理员可查询
+        if (userObj == null || userObj.getUserRole() != ADMIN_ROLE) {
+            throw new BusinessException(ErrorCode.NO_AUTH, "用户未登录或非管理员");
+        }
+        return true;
     }
 
     /**

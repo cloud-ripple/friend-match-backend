@@ -1,22 +1,22 @@
-package com.ripple.friend.model.domain;
+package com.ripple.friend.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * 队伍
- * @TableName team
+ * @description 队伍和用户信息封装类（脱敏）
  */
-@TableName(value ="team")
+
 @Data
-public class Team implements Serializable {
+public class TeamUserVo implements Serializable {
+
+    private static final long serialVersionUID = -9021230642438819959L;
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -50,11 +50,6 @@ public class Team implements Serializable {
     private Integer status;
 
     /**
-     * 入队密码
-     */
-    private String password;
-
-    /**
      * 创建时间
      */
     private Date createTime;
@@ -65,12 +60,8 @@ public class Team implements Serializable {
     private Date updateTime;
 
     /**
-     * 是否删除
+     * 队伍创建人信息
      */
-    @TableLogic  // 标识逻辑删除
-    private Integer isDelete;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    UserVo createUser;
 
 }

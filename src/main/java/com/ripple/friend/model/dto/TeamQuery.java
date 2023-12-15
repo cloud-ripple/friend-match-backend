@@ -1,7 +1,5 @@
 package com.ripple.friend.model.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.ripple.friend.common.PageRequest;
 import lombok.Data;
 
@@ -24,13 +22,17 @@ public class TeamQuery extends PageRequest implements Serializable {
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 队伍名
      */
     private String teamName;
+
+    /**
+     * 可以通过某个关键词同时对队伍名称和描述查询，此时前端不用传入 teamName、description参数
+     */
+    private String searchText;
 
     /**
      * 描述
